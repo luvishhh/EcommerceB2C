@@ -33,6 +33,29 @@ const data = {
       href: '/page/help',
     },
   ],
+  carousels: [
+    {
+      title: 'Most Popular Equipments For Sale',
+      buttonCaption: 'Shop Now',
+      image: '/images/banner-3.jpg',
+      url: '/search?category=Glass Profiles',
+      isPublished: true,
+    },
+    {
+      title: 'Best Sellers in Door Hardware',
+      buttonCaption: 'Shop Now',
+      image: '/images/banner-1.jpg',
+      url: '/search?category=Door Hardware',
+      isPublished: true,
+    },
+    {
+      title: 'Best Deals on Door Locks',
+      buttonCaption: 'See More',
+      image: '/images/banner-2.jpg',
+      url: '/search?category=Door Locks',
+      isPublished: true,
+    },
+  ],
 }
 
 export default data
