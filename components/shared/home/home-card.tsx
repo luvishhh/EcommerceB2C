@@ -33,23 +33,22 @@ export function HomeCard({ cards }: { cards: CardItem[] }) {
         <Card key={card.title} className='rounded-none flex flex-col'>
           <CardContent className='p-2 flex-grow flex flex-col justify-between'>
             <h3 className='text-base font-semibold mb-2'>{card.title}</h3>
-            <div className='grid grid-cols-2 gap-2 mb-4'>
+            <div className='grid grid-cols-2 gap-2 md:gap-4 mb-4'>
               {card.items.map((item) => (
                 <Link key={item.name} href={item.href} className='group block'>
-                  <div className='relative w-24 h-24 mb-1 bg-gray-50'>
+                  <div className='relative w-24 h-24 sm:w-32 sm:h-32 md:w-36 md:h-36 mb-1 bg-gray-50'>
                     <Image
                       src={item.image}
                       alt={item.name}
                       fill
                       className='object-cover group-hover:scale-105 transition-transform duration-300'
                     />
-                    {/* Show additional images if available */}
                     {item.images && item.images.length > 1 && (
                       <div className='absolute bottom-1 right-1 flex gap-0.5'>
                         {item.images.slice(1, 4).map((img, idx) => (
                           <div
                             key={idx}
-                            className='relative w-4 h-4 rounded-full overflow-hidden border border-white bg-gray-50'
+                            className='relative w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 rounded-full overflow-hidden border border-white bg-gray-50'
                           >
                             <Image
                               src={img}
@@ -62,7 +61,7 @@ export function HomeCard({ cards }: { cards: CardItem[] }) {
                       </div>
                     )}
                   </div>
-                  <div className='space-y-0.5 text-xs'>
+                  <div className='space-y-0.5 text-xs sm:text-sm'>
                     <h4 className='font-medium line-clamp-1 leading-tight'>
                       {item.name}
                     </h4>
