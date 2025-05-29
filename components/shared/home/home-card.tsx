@@ -28,12 +28,14 @@ type CardItem = {
 export function HomeCard({ cards }: { cards: CardItem[] }) {
   console.log('HomeCard received cards:', cards)
   return (
-    <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2'>
+    <div className='grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-y-2 gap-x-0 md:gap-x-2'>
       {cards.map((card) => (
         <Card key={card.title} className='rounded-none flex flex-col'>
-          <CardContent className='p-2 flex-grow flex flex-col justify-between'>
-            <h3 className='text-base font-semibold mb-2'>{card.title}</h3>
-            <div className='grid grid-cols-2 gap-2 md:gap-4 mb-4'>
+          <CardContent className='py-1 px-2 sm:p-2 flex-grow flex flex-col justify-between'>
+            <h3 className='text-base font-semibold mb-2 text-center'>
+              {card.title}
+            </h3>
+            <div className='grid grid-cols-2 gap-y-2 gap-x-0 sm:gap-x-2 md:gap-x-4 mb-4'>
               {card.items.map((item) => (
                 <Link key={item.name} href={item.href} className='group block'>
                   <div className='relative w-24 h-24 sm:w-32 sm:h-32 md:w-36 md:h-36 mb-1 bg-gray-50'>
@@ -70,7 +72,7 @@ export function HomeCard({ cards }: { cards: CardItem[] }) {
               ))}
             </div>
             {card.link && (
-              <div className='flex justify-start mt-auto'>
+              <div className='flex justify-center mt-auto'>
                 <Link
                   href={card.link.href}
                   className='text-sm text-black hover:underline font-bold'
