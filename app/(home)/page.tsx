@@ -31,6 +31,7 @@ export default async function HomePage() {
     .filter((category) => category.count > 0)
     .slice(0, 4)
   console.log('Fetched Categories:', categories)
+  const bestSellingProducts = await getProductsByTag({ tag: 'best-seller' })
 
   const newArrivals = await getProductsForCard({
     tag: 'new-arrival',
@@ -124,6 +125,16 @@ export default async function HomePage() {
         <Card className='w-full rounded-none'>
           <CardContent className='p-4 items-center gap-3'>
             <ProductSlider title={"Today's Deals"} products={todaysDeals} />
+          </CardContent>
+        </Card>
+
+        <Card className='w-full rounded-none'>
+          <CardContent className='p-4 items-center gap-3'>
+            <ProductSlider
+              title='Best Selling Products'
+              products={bestSellingProducts}
+              hideDetails
+            />
           </CardContent>
         </Card>
       </div>
