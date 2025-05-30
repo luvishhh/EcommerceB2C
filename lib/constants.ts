@@ -35,3 +35,7 @@ export const CATEGORY_MAPPING = {
 export type Category = keyof typeof CATEGORY_MAPPING
 export type Subcategory<T extends Category> =
   (typeof CATEGORY_MAPPING)[T][number]
+
+export const FREE_SHIPPING_MIN_PRICE = Number(
+  process.env.FREE_SHIPPING_MIN_PRICE || 35
+)

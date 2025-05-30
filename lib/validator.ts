@@ -33,3 +33,36 @@ export const ProductInputSchema = z.object({
   reviews: z.array(z.string()).default([]),
   numSales: z.coerce.number().int().nonnegative().default(0),
 })
+
+// Order Item
+export const OrderItemSchema = z.object({
+  clientId: z.string().min(1, 'clientId is required'),
+  product: z.string().min(1, 'Product is required'),
+  name: z.string().min(1, 'Name is required'),
+  slug: z.string().min(1, 'Slug is required'),
+  category: z.string().min(1, 'Category is required'),
+  subCategory: z.string().min(1, 'SubCategory is required'),
+  quantity: z
+    .number()
+    .int()
+    .nonnegative('Quantity must be a non-negative number')
+    .min(1, 'Quantity must be at least 1'),
+  image: z.string().min(1, 'Image is required'),
+  price: Price('Price'),
+  size: z.string().optional(),
+  color: z.string().optional(),
+})
+
+export const CartSchema = z.object({
+  items: z
+    .array(OrderItemSchema)
+    .min(1, 'Order must contain at least one item'),
+  itemsPrice: z.number(),
+
+  taxPrice: z.optional(z.number()),
+  shippingPrice: z.optional(z.number()),
+  totalPrice: z.number(),
+  paymentMethod: z.optional(z.string()),
+  deliveryDateIndex: z.optional(z.number()),
+  expectedDeliveryDate: z.optional(z.date()),
+})

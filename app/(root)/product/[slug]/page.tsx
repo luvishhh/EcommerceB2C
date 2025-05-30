@@ -12,6 +12,8 @@ import {
 } from '@/lib/actions/product.action'
 import BrowsingHistoryList from '@/components/shared/browsing-history-list'
 import AddToBrowsingHistory from '@/components/shared/product/add-to-browsing-history'
+import AddToCart from '@/components/shared/product/add-to-cart'
+// import { generateId, round2 } from '@/lib/utils'
 
 export async function generateMetadata(props: {
   params: Promise<{ slug: string }>
@@ -169,6 +171,8 @@ export default async function ProductDetails(props: {
                     packaging.
                   </p>
                 </div>
+                {/* Add To Cart component with quantity selector and Buy Now button */}
+                {product.countInStock !== 0 && <AddToCart product={product} />}
               </CardContent>
             </Card>
           </div>

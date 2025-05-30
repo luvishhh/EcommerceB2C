@@ -1,5 +1,5 @@
 'use client'
-import useBrowsingHistory from '@/app/hooks/use-browsing-history'
+import useBrowsingHistory from '@/hooks/use-browsing-history'
 import { useEffect, useCallback } from 'react'
 
 export default function AddToBrowsingHistory({
