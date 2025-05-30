@@ -19,7 +19,7 @@ export default function AddToBrowsingHistory({
       category,
       subCategory,
     })
-  }, [id, category, subCategory])
+  }, [id, category, subCategory, addItem])
 
   useEffect(() => {
     addToHistory()

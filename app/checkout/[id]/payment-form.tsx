@@ -54,22 +54,6 @@ export default function OrderPaymentForm({
     }
     return status
   }
-  const handleCreatePayPalOrder = async () => {
-    const res = await createPayPalOrder(order._id)
-    if (!res.success) {
-      toast.error(res.message)
-      return
-    }
-    return res.data
-  }
-  const handleApprovePayPalOrder = async (data: { orderID: string }) => {
-    const res = await approvePayPalOrder(order._id, data)
-    if (res.success) {
-      toast.success(res.message)
-    } else {
-      toast.error(res.message)
-    }
-  }
 
   const CheckoutSummary = () => (
     <Card>
@@ -128,9 +112,9 @@ export default function OrderPaymentForm({
                           throw new Error(res.message)
                         }
                         return res.data
-                      } catch (error) {
+                      } catch (err) {
                         toast.error('Failed to create PayPal order')
-                        throw error
+                        throw err
                       }
                     }}
                     onApprove={async (data) => {
@@ -142,8 +126,9 @@ export default function OrderPaymentForm({
                         } else {
                           toast.error(res.message)
                         }
-                      } catch (error) {
+                      } catch (err) {
                         toast.error('Failed to approve PayPal order')
+                        console.error('PayPal approval error:', err)
                       }
                     }}
                     onError={(err) => {
