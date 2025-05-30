@@ -52,7 +52,7 @@ export default function AddToCart({
       product.colors && product.colors.length > 0
         ? product.colors[0]
         : undefined, // Default color if available
-    // countInStock is not part of OrderItemSchema, removed
+    countInStock: product.countInStock,
   }
 
   return minimal ? (
