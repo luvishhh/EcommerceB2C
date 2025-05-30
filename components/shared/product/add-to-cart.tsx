@@ -60,7 +60,7 @@ export default function AddToCart({
       className='rounded-full w-auto'
       onClick={async () => {
         try {
-          const itemId = await addItem(orderItem, 1)
+          await addItem(orderItem, 1)
           toast({
             description: 'Added to Cart',
             action: (
@@ -107,7 +107,7 @@ export default function AddToCart({
         type='button'
         onClick={async () => {
           try {
-            const itemId = await addItem(orderItem, quantity)
+            await addItem(orderItem, quantity)
             console.log('Redirecting to /cart')
             router.push('/cart')
           } catch (error: any) {
