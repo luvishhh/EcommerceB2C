@@ -32,6 +32,12 @@ if (process.env.NODE_ENV === 'development') {
   client = new MongoClient(uri, options)
 }
 
+// Only import and use MongoDB client in server-side code
+// This file should never be imported in client components or code paths
+if (typeof window !== 'undefined') {
+  throw new Error('MongoDB client cannot be imported on the client side!')
+}
+
 // Export a module-scoped MongoClient. By doing this in a
 // separate module, the client can be shared across functions.
 export default client

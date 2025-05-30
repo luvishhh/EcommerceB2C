@@ -1,5 +1,6 @@
 import {
   CartSchema,
+  OrderInputSchema,
   OrderItemSchema,
   ProductInputSchema,
   ShippingAddressSchema,
@@ -71,3 +72,45 @@ export type IUserInput = z.infer<typeof UserInputSchema>
 export type IUserSignIn = z.infer<typeof UserSignInSchema>
 
 export type IUserSignUp = z.infer<typeof UserSignUpSchema>
+export interface IOrderInput {
+  user: string | { name: string; email: string }
+  items: Array<{
+    clientId: string
+    product: string
+    name: string
+    slug: string
+    category: string
+    subCategory: string
+    quantity: number
+    image: string
+    price: string
+    size?: string
+    color?: string
+    countInStock: number
+  }>
+  shippingAddress: {
+    fullName: string
+    street: string
+    city: string
+    postalCode: string
+    province: string
+    phone: string
+    country: string
+  }
+  paymentMethod: string
+  paymentResult?: {
+    id: string
+    status: string
+    email_address: string
+    pricePaid: string
+  }
+  itemsPrice: number
+  shippingPrice: number
+  taxPrice: number
+  totalPrice: number
+  expectedDeliveryDate: Date
+  isPaid: boolean
+  paidAt: Date
+  isDelivered: boolean
+  deliveredAt: Date
+}

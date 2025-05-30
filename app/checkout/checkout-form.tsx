@@ -43,6 +43,7 @@ import {
 } from '@/lib/constants'
 import { ShippingAddress } from '@/type'
 import useIsMounted from '@/hooks/is-mounted-hook'
+import { toast } from 'sonner'
 
 const shippingAddressDefaultValues =
   process.env.NODE_ENV === 'development'
@@ -84,6 +85,7 @@ const CheckoutForm = () => {
     updateItem,
     removeItem,
     setDeliveryDateIndex,
+    clearCart,
   } = useCartStore()
   const isMounted = useIsMounted()
 
@@ -114,7 +116,31 @@ const CheckoutForm = () => {
     useState<boolean>(false)
 
   const handlePlaceOrder = async () => {
-    // TODO: place order
+    const res = await fetch('/api/orders', {
+      method: 'POST',
+      body: JSON.stringify({
+        items,
+        shippingAddress,
+        expectedDeliveryDate: calculateFutureDate(
+          AVAILABLE_DELIVERY_DATES[deliveryDateIndex!].daysToDeliver
+        ),
+        deliveryDateIndex,
+        paymentMethod,
+        itemsPrice,
+        shippingPrice,
+        taxPrice,
+        totalPrice,
+      }),
+      headers: { 'Content-Type': 'application/json' },
+    }).then((r) => r.json())
+
+    if (!res.success) {
+      toast.error(res.message)
+    } else {
+      toast.success(res.message)
+      clearCart()
+      router.push(`/checkout/${res.data?.orderId}`)
+    }
   }
   const handleSelectPaymentMethod = () => {
     setIsAddressSelected(true)
