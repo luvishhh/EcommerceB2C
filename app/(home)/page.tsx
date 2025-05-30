@@ -59,34 +59,41 @@ export default async function HomePage() {
         text: 'See More',
         href: '/search',
       },
-      items: categories.map((category) => {
-        const activeSubcategories = category.subcategories.filter(
-          (sub) => sub.count > 0
-        )
-        const item = {
-          name: category.name,
-          // Use the first product image as category image, fallback to placeholder
-          image:
-            category.featuredImage || `/images/${toSlug(category.name)}.jpg`,
-          href: `/search?category=${category.name}`,
-          description: `${category.count} products in ${activeSubcategories.length} subcategories`,
-          // Include subcategory details for interactive display
-          subcategories: activeSubcategories.map((sub) => ({
-            name: sub.name,
-            count: sub.count,
-            images: sub.sampleImages?.slice(0, 2) || [], // Show up to 2 sample images per subcategory
-          })),
-        }
-        return item
-      }),
+      items:
+        categories && Array.isArray(categories)
+          ? categories.map((category) => {
+              const activeSubcategories = category.subcategories.filter(
+                (sub) => sub.count > 0
+              )
+              const item = {
+                name: category.name,
+                // Use the first product image as category image, fallback to placeholder
+                image:
+                  category.featuredImage ||
+                  `/images/${toSlug(category.name)}.jpg`,
+                href: `/search?category=${category.name}`,
+                description: `${category.count} products in ${activeSubcategories.length} subcategories`,
+                // Include subcategory details for interactive display
+                subcategories: activeSubcategories.map((sub) => ({
+                  name: sub.name,
+                  count: sub.count,
+                  images: sub.sampleImages?.slice(0, 2) || [], // Show up to 2 sample images per subcategory
+                })),
+              }
+              return item
+            })
+          : [], // Added check and fallback empty array
     },
     {
       title: 'Explore New Arrivals',
-      items: newArrivals.map((product) => ({
-        ...product,
-        image: product.images?.[0], // Use the first image from the fetched product data
-        images: product.images, // Pass all images for thumbnails
-      })),
+      items:
+        newArrivals && Array.isArray(newArrivals)
+          ? newArrivals.map((product) => ({
+              ...product,
+              image: product.images?.[0], // Use the first image from the fetched product data
+              images: product.images, // Pass all images for thumbnails
+            }))
+          : [], // Added check and fallback empty array
       link: {
         text: 'View All',
         href: '/search?tag=new-arrival',
@@ -94,11 +101,14 @@ export default async function HomePage() {
     },
     {
       title: 'Discover Best Sellers',
-      items: bestSellers.map((product) => ({
-        ...product,
-        image: product.images?.[0], // Use the first image from the fetched product data
-        images: product.images, // Pass all images for thumbnails
-      })),
+      items:
+        bestSellers && Array.isArray(bestSellers)
+          ? bestSellers.map((product) => ({
+              ...product,
+              image: product.images?.[0], // Use the first image from the fetched product data
+              images: product.images, // Pass all images for thumbnails
+            }))
+          : [], // Added check and fallback empty array
       link: {
         text: 'View All',
         href: '/search?tag=best-seller',
@@ -106,11 +116,14 @@ export default async function HomePage() {
     },
     {
       title: 'Featured Products',
-      items: featureds.map((product) => ({
-        ...product,
-        image: product.images?.[0], // Use the first image from the fetched product data
-        images: product.images, // Pass all images for thumbnails
-      })),
+      items:
+        featureds && Array.isArray(featureds)
+          ? featureds.map((product) => ({
+              ...product,
+              image: product.images?.[0], // Use the first image from the fetched product data
+              images: product.images, // Pass all images for thumbnails
+            }))
+          : [], // Added check and fallback empty array
       link: {
         text: 'Shop Now',
         href: '/search?tag=featured',
@@ -125,17 +138,23 @@ export default async function HomePage() {
         <HomeCard cards={cards} />
         <Card className='w-full rounded-none'>
           <CardContent className='p-4 items-center gap-3'>
-            <ProductSlider title={"Today's Deals"} products={todaysDeals} />
+            {/* Add check for todaysDeals before passing to ProductSlider */}
+            {todaysDeals && Array.isArray(todaysDeals) && (
+              <ProductSlider title={"Today's Deals"} products={todaysDeals} />
+            )}
           </CardContent>
         </Card>
 
         <Card className='w-full rounded-none'>
           <CardContent className='p-4 items-center gap-3'>
-            <ProductSlider
-              title='Best Selling Products'
-              products={bestSellingProducts}
-              hideDetails
-            />
+            {/* Add check for bestSellingProducts before passing to ProductSlider */}
+            {bestSellingProducts && Array.isArray(bestSellingProducts) && (
+              <ProductSlider
+                title='Best Selling Products'
+                products={bestSellingProducts}
+                hideDetails
+              />
+            )}
           </CardContent>
         </Card>
       </div>
