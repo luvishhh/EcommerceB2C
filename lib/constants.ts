@@ -4,7 +4,7 @@ export const APP_SLOGAN =
 export const APP_DESCRIPTION =
   process.env.NEXT_PUBLIC_APP_DESCRIPTION ||
   'E-commerce B2C BUILT WITH NEXT.JS AND MONFOGO DB'
-
+export const PAGE_SIZE = Number(process.env.PAGE_SIZE || 9)
 export const CATEGORY_MAPPING = {
   'Door Hardware': [
     'Door Handles',

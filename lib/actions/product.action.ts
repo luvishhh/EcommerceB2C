@@ -2,7 +2,7 @@
 
 import { connectToDatabase } from '@/lib/db'
 import Product, { IProduct } from '@/lib/db/models/product.model'
-import { CATEGORY_MAPPING } from '@/lib/constants'
+import { CATEGORY_MAPPING, PAGE_SIZE } from '@/lib/constants'
 
 export async function getAllCategories() {
   await connectToDatabase()
@@ -215,4 +215,53 @@ export async function getProductsByTag({
     .sort({ createdAt: 'desc' })
     .limit(limit)
   return JSON.parse(JSON.stringify(products)) as IProduct[]
+}
+// GET ONE PRODUCT BY SLUG
+export async function getProductBySlug(slug: string) {
+  await connectToDatabase()
+  const product = await Product.findOne({ slug, isPublished: true }).lean()
+  if (!product) throw new Error('Product not found')
+  return JSON.parse(JSON.stringify(product)) as IProduct
+}
+// GET RELATED PRODUCTS: PRODUCTS WITH SAME CATEGORY AND SUBCATEGORY
+export async function getRelatedProductsByCategory({
+  category,
+  subCategory,
+  productId,
+  limit = PAGE_SIZE,
+  page = 1,
+}: {
+  category: string
+  subCategory?: string
+  productId: string
+  limit?: number
+  page: number
+}) {
+  await connectToDatabase()
+  const skipAmount = (Number(page) - 1) * limit
+
+  // Base conditions
+  const conditions: Record<string, unknown> = {
+    isPublished: true,
+    category,
+    _id: { $ne: productId },
+  }
+
+  // Add subcategory condition if provided
+  if (subCategory) {
+    conditions.subCategory = subCategory
+  }
+
+  const products = await Product.find(conditions)
+    .sort({ numSales: 'desc' })
+    .skip(skipAmount)
+    .limit(limit)
+    .lean()
+
+  const productsCount = await Product.countDocuments(conditions)
+
+  return {
+    data: JSON.parse(JSON.stringify(products)) as IProduct[],
+    totalPages: Math.ceil(productsCount / limit),
+  }
 }
