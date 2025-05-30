@@ -66,7 +66,7 @@ export default function AddToCart({
             action: (
               <Button
                 onClick={() => {
-                  router.push(`/cart/${itemId}`)
+                  router.push('/cart')
                 }}
               >
                 Go to Cart
@@ -108,8 +108,8 @@ export default function AddToCart({
         onClick={async () => {
           try {
             const itemId = await addItem(orderItem, quantity)
-            console.log('Redirecting to /cart/' + itemId)
-            router.push(`/cart/${itemId}`)
+            console.log('Redirecting to /cart')
+            router.push('/cart')
           } catch (error: any) {
             toast({
               variant: 'destructive',
@@ -125,7 +125,7 @@ export default function AddToCart({
         onClick={async () => {
           try {
             await addItem(orderItem, quantity)
-            router.push(`/checkout`)
+            router.push('/checkout')
           } catch (error: any) {
             toast({
               variant: 'destructive',
