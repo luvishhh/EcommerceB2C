@@ -9,7 +9,7 @@ import Search from './search'
 
 export default function Header() {
   return (
-    <header className='bg-black  text-white'>
+    <header className='bg-black  text-white z-[100] relative'>
       <div className='px-2'>
         <div className='flex items-center justify-between'>
           <div className='flex items-center'>
@@ -43,7 +43,7 @@ export default function Header() {
           <MenuIcon />
           All
         </Button>
-        <div className='flex items-center flex-wrap gap-3 overflow-hidden   max-h-[42px]'>
+        <div className='flex items-center flex-wrap gap-3 overflow-hidden max-h-[42px] z-[999]'>
           {data.headerMenus.map((menu) => (
             <Link
               href={menu.href}

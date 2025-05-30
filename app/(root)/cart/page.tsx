@@ -43,7 +43,6 @@ export default function CartPage() {
                 <CardHeader className='text-3xl pb-0'>Shopping Cart</CardHeader>
                 <CardContent className='p-4'>
                   <div className='flex justify-end border-b mb-4'>Price</div>
-
                   {items.map((item) => (
                     <div
                       key={item.clientId}
@@ -62,7 +61,6 @@ export default function CartPage() {
                           />
                         </div>
                       </Link>
-
                       <div className='flex-1 space-y-4'>
                         <Link
                           href={`/product/${item.slug}`}
@@ -119,7 +117,6 @@ export default function CartPage() {
                               <br />
                             </>
                           )}
-
                           <span className='font-bold text-lg'>
                             <ProductPrice
                               price={Number(item.price) * Number(item.quantity)}
@@ -130,7 +127,6 @@ export default function CartPage() {
                       </div>
                     </div>
                   ))}
-
                   <div className='flex justify-end text-lg my-2'>
                     Subtotal (
                     {items.reduce((acc, item) => acc + item.quantity, 0)}{' '}
