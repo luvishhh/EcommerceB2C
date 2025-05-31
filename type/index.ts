@@ -3,12 +3,22 @@ import {
   OrderInputSchema,
   OrderItemSchema,
   ProductInputSchema,
+  ReviewInputSchema,
   ShippingAddressSchema,
   UserInputSchema,
   UserSignInSchema,
   UserSignUpSchema,
 } from '@/lib/validator'
 import { z } from 'zod'
+
+export type IReviewInput = z.infer<typeof ReviewInputSchema>
+export type IReviewDetails = IReviewInput & {
+  _id: string
+  createdAt: string
+  user: {
+    name: string
+  }
+}
 
 export type IProductInput = z.infer<typeof ProductInputSchema>
 
@@ -38,6 +48,11 @@ export type Product = {
 export type Data = {
   users: IUserInput[]
   products: Product[]
+  reviews: {
+    title: string
+    rating: number
+    comment: string
+  }[]
   productsMeta?: {
     total: number
     page: number
