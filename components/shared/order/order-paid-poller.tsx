@@ -1,8 +1,14 @@
-"use client"
-import { useEffect, useState } from "react"
-import { useRouter } from "next/navigation"
+'use client'
+import { useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
 
-export default function OrderPaidPoller({ orderId, initialIsPaid }: { orderId: string, initialIsPaid: boolean }) {
+export default function OrderPaidPoller({
+  orderId,
+  initialIsPaid,
+}: {
+  orderId: string
+  initialIsPaid: boolean
+}) {
   const [isPaid, setIsPaid] = useState(initialIsPaid)
   const router = useRouter()
 
