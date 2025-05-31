@@ -1,6 +1,6 @@
 'use client'
 import useBrowsingHistory from '@/hooks/use-browsing-history'
-import { useEffect, useCallback } from 'react'
+import { useEffect } from 'react'
 
 export default function AddToBrowsingHistory({
   id,
@@ -13,17 +13,10 @@ export default function AddToBrowsingHistory({
 }) {
   const { addItem } = useBrowsingHistory()
 
-  const addToHistory = useCallback(() => {
-    addItem({
-      id,
-      category,
-      subCategory,
-    })
-  }, [id, category, subCategory, addItem])
-
   useEffect(() => {
-    addToHistory()
-  }, [addToHistory])
+    addItem({ id, category, subCategory })
+    // Only run on mount or when id/category/subCategory change
+  }, [id, category, subCategory, addItem])
 
   return null
 }

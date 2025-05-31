@@ -1,5 +1,6 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
+import { useCallback } from 'react'
 
 type BrowsingHistory = {
   products: { id: string; category: string; subCategory: string }[]
@@ -17,28 +18,29 @@ export const browsingHistoryStore = create<BrowsingHistory>()(
 
 export default function useBrowsingHistory() {
   const { products } = browsingHistoryStore()
+
+  // Memoize addItem and clear so they are stable between renders
+  const addItem = useCallback(
+    (product: { id: string; category: string; subCategory: string }) => {
+      browsingHistoryStore.setState((state) => {
+        const newProducts = [...state.products]
+        const index = newProducts.findIndex((p) => p.id === product.id)
+        if (index !== -1) newProducts.splice(index, 1)
+        newProducts.unshift(product)
+        if (newProducts.length > 10) newProducts.pop()
+        return { products: newProducts }
+      })
+    },
+    []
+  )
+
+  const clear = useCallback(() => {
+    browsingHistoryStore.setState({ products: [] })
+  }, [])
+
   return {
     products,
-    addItem: (product: {
-      id: string
-      category: string
-      subCategory: string
-    }) => {
-      const index = products.findIndex((p) => p.id === product.id)
-      if (index !== -1) products.splice(index, 1) // Remove duplicate if it exists
-      products.unshift(product) // Add id to the start
-
-      if (products.length > 10) products.pop() // Remove excess items if length exceeds 10
-
-      browsingHistoryStore.setState({
-        products,
-      })
-    },
-
-    clear: () => {
-      browsingHistoryStore.setState({
-        products: [],
-      })
-    },
+    addItem,
+    clear,
   }
 }
