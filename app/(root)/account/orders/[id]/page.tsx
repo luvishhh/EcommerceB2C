@@ -1,11 +1,17 @@
 import { notFound } from 'next/navigation'
 import React from 'react'
+import dynamic from 'next/dynamic'
 
 import { auth } from '@/auth'
 import OrderDetailsForm from '@/components/shared/order/order-details-form'
 import Link from 'next/link'
 import { formatId } from '@/lib/utils'
 import { getOrderById } from '@/lib/actions/order.action'
+
+const OrderPaidPoller = dynamic(
+  () => import('@/components/shared/order/order-paid-poller'),
+  { ssr: false }
+)
 
 export async function generateMetadata(props: {
   params: Promise<{ id: string }>
@@ -45,6 +51,9 @@ export default async function OrderDetailsPage(props: {
         order={order}
         isAdmin={session?.user?.role === 'Admin' || false}
       />
+      {!order.isPaid && (
+        <OrderPaidPoller orderId={order._id} initialIsPaid={order.isPaid} />
+      )}
     </>
   )
 }
