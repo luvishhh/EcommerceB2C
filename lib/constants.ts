@@ -2,7 +2,8 @@ export const APP_NAME = process.env.NEXT_PUBLIC_APP_NAME || 'Ecom'
 export const SERVER_URL =
   process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000'
 
-export const SENDER_EMAIL = process.env.SENDER_EMAIL || 'onboarding@resend.dev'
+export const SENDER_EMAIL =
+  process.env.SENDER_EMAIL || 'Lavishkhare11@gmail.com'
 export const SENDER_NAME = process.env.SENDER_NAME || APP_NAME
 export const APP_SLOGAN =
   process.env.NEXT_PUBLIC_APP_SLOGAN || 'Your one-stop shop for everything'

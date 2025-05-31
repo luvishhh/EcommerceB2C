@@ -155,3 +155,42 @@ export const formatDateTime = (dateString: Date) => {
 export function formatId(id: string) {
   return `..${id.substring(id.length - 6)}`
 }
+
+export const getFilterUrl = ({
+  params,
+  category,
+  subCategory,
+  tag,
+  sort,
+  price,
+  rating,
+  page,
+}: {
+  params: {
+    q?: string
+    category?: string
+    subCategory?: string
+    tag?: string
+    price?: string
+    rating?: string
+    sort?: string
+    page?: string
+  }
+  tag?: string
+  category?: string
+  subCategory?: string
+  sort?: string
+  price?: string
+  rating?: string
+  page?: string
+}) => {
+  const newParams = { ...params }
+  if (category) newParams.category = category
+  if (subCategory) newParams.subCategory = subCategory
+  if (tag) newParams.tag = toSlug(tag)
+  if (price) newParams.price = price
+  if (rating) newParams.rating = rating
+  if (page) newParams.page = page
+  if (sort) newParams.sort = sort
+  return `/search?${new URLSearchParams(newParams).toString()}`
+}
