@@ -32,15 +32,43 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { getOrderSummary } from '@/lib/actions/order.action'
 import { IOrderList } from '@/type'
 
+// Define types for chart and table data
+interface SalesData {
+  date: string
+  totalSales: number
+}
+
+interface TableChartDataItem {
+  label: string
+  image?: string
+  value: number
+  id?: string
+}
+
+interface SalesCategoryData {
+  _id: string
+  totalSales: number
+}
+
+interface OrderSummaryData {
+  totalSales: number
+  ordersCount: number
+  usersCount: number
+  productsCount: number
+  salesChartData: SalesData[]
+  monthlySales: TableChartDataItem[]
+  topSalesProducts: TableChartDataItem[]
+  topSalesCategories: SalesCategoryData[]
+  latestOrders: IOrderList[]
+}
+
 export default function OverviewReport() {
   const [date, setDate] = useState<DateRange | undefined>({
     from: calculatePastDate(30),
     to: new Date(),
   })
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [data, setData] = useState<{ [key: string]: any }>()
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [data, setData] = useState<OrderSummaryData>()
   const [isPending, startTransition] = useTransition()
   useEffect(() => {
     if (date) {
@@ -169,7 +197,7 @@ export default function OverviewReport() {
         <div className='grid gap-4 md:grid-cols-2'>
           <Card>
             <CardHeader>
-              <CardTitle>How much you’re earning</CardTitle>
+              <CardTitle>How much you&apos;re earning</CardTitle>
               <CardDescription>Estimated · Last 6 months</CardDescription>
             </CardHeader>
             <CardContent>
