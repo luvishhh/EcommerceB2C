@@ -131,3 +131,11 @@ export interface IOrderInput {
   isDelivered: boolean
   deliveredAt: Date
 }
+export type IOrderList = IOrderInput & {
+  _id: string
+  user: {
+    name: string
+    email: string
+  }
+  createdAt: Date
+}
