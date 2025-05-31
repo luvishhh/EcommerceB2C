@@ -19,7 +19,7 @@ export default function Search() {
         <SelectTrigger className='w-auto h-full dark:border-gray-200 bg-gray-100 text-black border-r rounded-r-none rounded-l-md'>
           <SelectValue placeholder='All' />
         </SelectTrigger>
-        <SelectContent position='popper'>
+        <SelectContent position='popper' className='bg-white dark:bg-gray-800'>
           <SelectItem value='all'>All</SelectItem>
           {categories.map((category) => (
             <SelectItem key={category.name} value={category.name}>

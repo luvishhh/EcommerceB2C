@@ -24,7 +24,7 @@ export default async function Sidebar() {
         <MenuIcon className='h-5 w-5 mr-1' />
         All
       </DrawerTrigger>
-      <DrawerContent className='w-[350px] mt-0 top-0'>
+      <DrawerContent className='w-[350px] mt-0 top-0 bg-white dark:bg-gray-800'>
         <div className='flex flex-col h-full'>
           {/* User Sign In Section */}
           <div className='dark bg-gray-800 text-foreground flex items-center justify-between'>
